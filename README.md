@@ -1,38 +1,104 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+    <a style="text-decoration: none" href="https://www.svix.com">
+      <img width="120" src="https://avatars.githubusercontent.com/u/80175132?s=200&v=4" />
+      <p align="center">Svix - Webhooks as a service</p>
+    </a>
+</h1>
+<h2 align="center">
+  <a href="https://svix.com">Website</a> | <a href="https://docs.svix.com">Documentation</a> | <a href="https://svix.com/slack">Community Slack</a>
+<h2>
 
-## Getting Started
+# Example Svix Application
 
-First, run the development server:
+This is an example Next.js application showing how to use Svix both as a provider (sender) and a consumer (receiver) of webhooks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+While this application is writing in TypeScript and targets Next.js, it's a useful example for all other languages and frameworks, and shows how to structure an integration.
+
+The application consists of a fake *Signup* form to let a customer "signup" to your application, a fake *Dashboard* that is meant to simulate your real application, and a *Webhooks Portal* to let your customers interact with the webhooks dashboard (add endpoints, see logs, etc).
+
+# What is Svix?
+
+Svix makes it easy for developers to send webhooks. Developers make one API call, and Svix takes care of deliverability, retries, security, and more. For more information, please refer to the [Svix homepage](https://www.svix.com).
+
+# Documentation
+
+You can find general usage documentation at <https://docs.svix.com>. For complete API documentation with code examples for each endpoint in all of our official client libraries head over to our API documentation site at <https://api.svix.com>.
+
+# Support & Community
+
+  - [GitHub Issues](https://github.com/svix/svix-webhooks/issues) - report issues and make suggestions.
+  - [Community Forum](https://github.com/svix/svix-webhooks/discussions) - ask questions, and start discussions!
+  - [Slack](https://www.svix.com/slack/) - come and chat with us!
+
+To stay up-to-date with new features and improvements be sure to watch our repo!
+
+## Code structure
+
+This codebase contains example code for a webhooks provider (Svix customer), a webhook consumer (Svix customer's customer), and some boilerplate Next.js code. It includes both the UI parts and the server API parts.
+
+### Provider
+
+These files demonstrate how a Svix integration looks like from on provider's (Svix customer) side. This covers both the API and the UI parts.
+
+#### API parts
+This file implements a fake signup flow and demonstrates how to create a Svix Application for the customer (consumer) once they sign up to your application.
+```
+src/pages/api/provider/signup.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This file is meant to represent business logic on your end, and demonstrates how to send webhooks once events occur on the backend.
+```
+src/pages/api/provider/fake-server-action.ts
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+This file demonstrates how to securely give your customers access to the pre-built Application Portal. This works in tandem with the UI part below, and supplies it with the login magic link.
+```
+src/pages/api/provider/app-portal.ts
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+#### UI parts
+This page shows how to embed the Svix application portal in your UI using the Svix React library. This page requires the above app portal API page.
+```
+src/pages/dashboard/webhooks.tsx
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+These two files aren't actually important. They are only needed for a functional example, and are there to simulate having a real application.
+```
+src/pages/dashboard/index.tsx
+src/pages/signup.tsx
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Consumer
+This API endpoint demonstrates how a consumer of webhooks should verify the integrity of the webhooks using the Svix libraries:
+```
+src/pages/api/consumer/webhooks.ts
+```
 
-## Learn More
+## Running it locally
 
-To learn more about Next.js, take a look at the following resources:
+Clone the repository and install needed dependencies
+```
+git clone https://github.com/svix/svix-example
+cd svix-example
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Install needed deps
+npm i
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Create a file called `.env.local` and set both the Svix token (get yours from dashboard.svix.com), and a placeholder webhook secret (we'll get the real one later):
 
-## Deploy on Vercel
+```
+# Provider config
+SVIX_TOKEN=testsk_SInWH9Tx7tS4Him4re6Zawyx0vf7XlU.eu
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Consumer config
+SVIX_WEBHOOK_SECRET="whsec_dont_worry_about_it_for_now"
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Creating the needed event types
+
+This example assumes your environment has two event types: `invoice.created` and `invoice.deleted` in your environment. To create them, please head to the [event type page](https://dashboard.svix.com/event-types) on the Svix dashboard. For more information about event types, please refer to [the event types docs](https://docs.svix.com/event-types).
+
+### Verifying webhook signatures
+
+The endpoints in the example will fail to verify the signatures because the webhook secret we set in the previous section is bad. In order to fix that, you would need to navigate to [the Webhooks Portal tab](http://localhost:3000/dashboard/webhooks), click on the endpoint you created, copy the webhook secret, paste it in `.env.local`, and restart your local server.
