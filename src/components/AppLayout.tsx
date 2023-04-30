@@ -23,6 +23,7 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Webhooks Portal", href: "/dashboard/webhooks" },
+    { name: "svix-react Example", href: "/dashboard/advanced/svix-react-example" },
   ].map((x) => ({ ...x, current: x.href === router.pathname }));
   const paths = [...navigation, { name: "Signup", href: "/signup" }];
 
