@@ -74,6 +74,9 @@ This API endpoint demonstrates how a consumer of webhooks should verify the inte
 src/pages/api/consumer/webhooks.ts
 ```
 
+### The "advanced" subdirectories
+The advanced subdirectories include more advanced topics and examples that are not needed in most cases, and are only needed for advanced use-cases.
+
 ## Running it locally
 
 Clone the repository and install needed dependencies
