@@ -8,6 +8,10 @@ export function getUser(_req: NextApiRequest): string {
   return hardcodedUsername;
 }
 
+export function getUserLogo(): string {
+  return "/logoipsum.svg";
+}
+
 export async function postWithAuth(
   _username: undefined | string,
   url: string,
