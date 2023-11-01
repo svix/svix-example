@@ -23,9 +23,18 @@ export default function Login() {
         className="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 max-w-xl mb-4"
         role="alert"
       >
-        This is a fake signup form created to demonstrate the signup flow.
-        <br />
-        Click <q>Signup</q> to continue.
+        This is a fake signup form created to demonstrate the signup flow. It uses the{" "}
+        <a
+          href="https://api.svix.com/docs#tag/Application/operation/v1.application.create"
+          className="font-bold"
+        >
+          create application API
+        </a>{" "}
+        behind the scenes to create a{" "}
+        <a href="https://docs.svix.com/quickstart" className="font-bold">
+          consumer application
+        </a>{" "}
+        to send webhooks to. Click <q>Signup</q> to continue.
       </div>
 
       <div className="w-full max-w-xs">

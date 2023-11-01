@@ -47,6 +47,22 @@ const InboundMessages = () => {
 
   return (
     <div>
+      <h1 className="text-3xl font-bold underline">Custom Webhooks Portal</h1>
+      <div
+        className="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 max-w-xl mb-4"
+        role="alert"
+      >
+        This page shows an example custom webhooks portal created with the{" "}
+        <a href="https://www.npmjs.com/package/svix-react" className="font-bold">
+          Svix React.js library
+        </a>
+        . This gives you the ability to build custom workflows and designs not possible
+        with the commonly used{" "}
+        <a href="https://docs.svix.com/app-portal" className="font-bold">
+          embeddable application portal
+        </a>
+        .
+      </div>
       <div className="flow-root mt-6">
         <ul role="list" className="-my-5 divide-y divide-gray-200">
           {messages.map((m) => (

@@ -42,9 +42,25 @@ export default function Dashboard() {
         className="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 max-w-xl mb-4"
         role="alert"
       >
-        This dashboard is an example application <q>Main Page</q>. Normally customers
-        would be able to do something useful, in this example they just have buttons that
-        fake create invoices in order to trigger webhooks.
+        <p>
+          This dashboard is an example application <q>Main Page</q>. Normally customers
+          would be able to do something useful, in this example they just have buttons
+          that fake creating invoices in order to trigger webhooks.
+        </p>
+        <p>
+          These buttons use the{" "}
+          <a
+            href="https://api.svix.com/docs#tag/Message/operation/v1.message.create"
+            className="font-bold"
+          >
+            message sending API
+          </a>{" "}
+          behind the scenes to send webhooks to the{" "}
+          <a href="https://docs.svix.com/quickstart" className="font-bold">
+            consumer application
+          </a>{" "}
+          when created on signup.
+        </p>
       </div>
       <div className="flex space-x-4">
         <LoadingButton
