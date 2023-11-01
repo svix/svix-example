@@ -10,10 +10,11 @@ export default function AutoLogin() {
   const searchParams = useSearchParams();
 
   const logo = searchParams.get("logo");
+  const avatar = searchParams.get("avatar");
   const username = searchParams.get("user");
 
   async function loginFinished(username: string | null, logo: string | null) {
-    if (!username && !logo) {
+    if (!username) {
       // Still loading...
       return;
     }
@@ -22,6 +23,11 @@ export default function AutoLogin() {
       localStorage.setItem("logo", logo);
     } else {
       localStorage.removeItem("logo");
+    }
+    if (avatar) {
+      localStorage.setItem("avatar", avatar);
+    } else {
+      localStorage.removeItem("avatar");
     }
     if (username) {
       localStorage.setItem("username", username);

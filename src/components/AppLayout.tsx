@@ -6,13 +6,11 @@ import clsx from "clsx";
 import Link from "next/link";
 import Container from "./Container";
 import { useRouter } from "next/router";
-import { getClientLogo } from "@/auth";
+import { getClientAvatar, getClientLogo } from "@/auth";
 
 const user = {
   name: "John Doe",
   email: "john@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -22,6 +20,7 @@ const userNavigation = [
 export default function AppLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();
   const [logo, setLogo] = useState("");
+  const [avatar, setAvatar] = useState("");
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Webhooks Portal", href: "/dashboard/webhooks" },
@@ -35,6 +34,7 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     setLogo(getClientLogo());
+    setAvatar(getClientAvatar());
   });
 
   return (
@@ -81,11 +81,7 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
                           <div>
                             <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="sr-only">Open user menu</span>
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src={user.imageUrl}
-                                alt=""
-                              />
+                              <img className="h-8 w-8 rounded-full" src={avatar} alt="" />
                             </Menu.Button>
                           </div>
                           <Transition
@@ -171,11 +167,7 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
                   <div className="border-t border-gray-700 pt-4 pb-3">
                     <div className="flex items-center px-5">
                       <div className="flex-shrink-0">
-                        <img
-                          className="h-10 w-10 rounded-full"
-                          src={user.imageUrl}
-                          alt=""
-                        />
+                        <img className="h-10 w-10 rounded-full" src={avatar} alt="" />
                       </div>
                       <div className="ml-3">
                         <div className="text-base font-medium leading-none text-white">
