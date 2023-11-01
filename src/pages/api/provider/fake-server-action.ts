@@ -1,6 +1,6 @@
 import { Svix } from "svix";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUser } from "@/auth";
+import { getServerUser } from "@/auth";
 
 // The type parameter makes it easy to trigger events in this exapmle app.
 // Normally, this would just be two different API routes that actually do something.
@@ -22,7 +22,7 @@ interface InvoiceDeleted {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  const username = getUser(req);
+  const username = getServerUser(req);
   const data: DataIn = req.body;
 
   const svix = new Svix(process.env.SVIX_TOKEN!);

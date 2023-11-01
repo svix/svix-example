@@ -1,4 +1,4 @@
-import { hardcodedUsername, postWithAuth } from "@/auth";
+import { getClientUser, postWithAuth } from "@/auth";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -15,9 +15,10 @@ import "svix-react/style.css";
 
 export default function WebhooksDashboard() {
   const [appPortal, setAppPortal] = useState<string>();
+  const username = getClientUser();
 
   async function getAppPortalUrl() {
-    const res = await postWithAuth(hardcodedUsername, "/api/provider/app-portal", {});
+    const res = await postWithAuth(username, "/api/provider/app-portal", {});
 
     setAppPortal(res.url);
   }

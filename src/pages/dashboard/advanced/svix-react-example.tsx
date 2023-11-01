@@ -1,4 +1,4 @@
-import { hardcodedUsername, postWithAuth } from "@/auth";
+import { getClientUser, postWithAuth } from "@/auth";
 import { useEffect, useState } from "react";
 import { SvixProvider, useMessages } from "svix-react";
 
@@ -82,10 +82,10 @@ const InboundMessages = () => {
 export default function SvixReactExampleDashboard() {
   const [token, setToken] = useState<string>();
 
-  const appId = hardcodedUsername;
+  const username = getClientUser();
 
   async function getToken() {
-    const res = await postWithAuth(appId, "/api/provider/app-portal", {});
+    const res = await postWithAuth(username, "/api/provider/app-portal", {});
 
     setToken(res.token);
   }
@@ -94,7 +94,7 @@ export default function SvixReactExampleDashboard() {
     getToken();
   }, []);
 
-  if (!appId) {
+  if (!username) {
     return <div>App Id not configured</div>;
   }
 
@@ -103,7 +103,7 @@ export default function SvixReactExampleDashboard() {
   }
 
   return (
-    <SvixProvider appId={appId} token={token}>
+    <SvixProvider appId={username} token={token}>
       <div className="flex flex-col gap-8">
         <InboundMessages />
       </div>

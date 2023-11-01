@@ -1,19 +1,32 @@
 import { NextApiRequest } from "next";
 
-export const hardcodedUsername = "john-doe";
-
 // This is just terrible fake auth which automatically authenticates people
-export function getUser(_req: NextApiRequest): string {
-  // We assume it's always authenticated as user john-doe
-  return hardcodedUsername;
+export function getServerUser(req: NextApiRequest): string {
+  const username = req.headers.authorization;
+  if (!username) {
+    throw Error("Authentication failed");
+  }
+  return username;
 }
 
-export function getUserLogo(): string {
-  return "/logoipsum.svg";
+export function getClientUser(): string {
+  let user = undefined;
+  if (typeof window !== "undefined") {
+    user = localStorage.getItem("username");
+  }
+  return user ?? "john-doe";
+}
+
+export function getClientLogo(): string {
+  let logo = undefined;
+  if (typeof window !== "undefined") {
+    logo = localStorage.getItem("logo");
+  }
+  return logo ?? "/logoipsum.svg";
 }
 
 export async function postWithAuth(
-  _username: undefined | string,
+  username: string,
   url: string,
   body: any
 ): Promise<any> {
@@ -21,6 +34,7 @@ export async function postWithAuth(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: username,
     },
     body: JSON.stringify(body),
   });

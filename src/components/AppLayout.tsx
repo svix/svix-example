@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
@@ -6,7 +6,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import Container from "./Container";
 import { useRouter } from "next/router";
-import { getUserLogo } from "@/auth";
+import { getClientLogo } from "@/auth";
 
 const user = {
   name: "John Doe",
@@ -21,7 +21,7 @@ const userNavigation = [
 
 export default function AppLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();
-  const logo = getUserLogo();
+  const [logo, setLogo] = useState("");
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Webhooks Portal", href: "/dashboard/webhooks" },
@@ -32,6 +32,10 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
   const currentTitle = paths.find((x) => x.href === router.pathname)?.name;
   const title = `${currentTitle} · Svix Example`;
   const loggedIn = router.pathname !== "/signup";
+
+  useEffect(() => {
+    setLogo(getClientLogo());
+  });
 
   return (
     <>

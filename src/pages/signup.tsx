@@ -1,14 +1,15 @@
-import { hardcodedUsername, postWithAuth } from "@/auth";
+import { getClientUser, postWithAuth } from "@/auth";
 import { useRouter } from "next/router";
 
 export default function Login() {
   const router = useRouter();
+  const username = getClientUser();
 
   async function signup(e: React.FormEvent) {
     e.preventDefault();
 
-    await postWithAuth(undefined, "/api/provider/signup", {
-      username: hardcodedUsername,
+    await postWithAuth(username, "/api/provider/signup", {
+      username,
       company: "John Doe's",
     });
 
@@ -44,7 +45,7 @@ export default function Login() {
               id="username"
               type="text"
               placeholder="Username"
-              value={hardcodedUsername}
+              value={username}
               disabled
             />
           </div>

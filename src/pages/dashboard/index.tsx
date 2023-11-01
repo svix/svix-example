@@ -1,4 +1,4 @@
-import { hardcodedUsername, postWithAuth } from "@/auth";
+import { getClientUser, postWithAuth } from "@/auth";
 import { useState } from "react";
 
 function LoadingButton(props: { loading: boolean; value: string; onClick: () => void }) {
@@ -17,10 +17,11 @@ bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outli
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
+  const username = getClientUser();
 
   async function invoiceCreated() {
     setLoading(true);
-    await postWithAuth(hardcodedUsername, "/api/provider/fake-server-action", {
+    await postWithAuth(username, "/api/provider/fake-server-action", {
       type: "invoice.created",
     });
     setLoading(false);
@@ -28,7 +29,7 @@ export default function Dashboard() {
 
   async function invoiceDeleted() {
     setLoading(true);
-    await postWithAuth(hardcodedUsername, "/api/provider/fake-server-action", {
+    await postWithAuth(username, "/api/provider/fake-server-action", {
       type: "invoice.deleted",
     });
     setLoading(false);
