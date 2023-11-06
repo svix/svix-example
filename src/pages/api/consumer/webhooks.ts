@@ -29,6 +29,7 @@ interface InvoiceDeleted {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (req.method !== "POST") {
     res.status(405).json({});
+    return;
   }
 
   const payload = (await buffer(req)).toString();
