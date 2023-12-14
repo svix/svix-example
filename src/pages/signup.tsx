@@ -1,18 +1,22 @@
 import { getClientUser, postWithAuth } from "@/auth";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
   const username = getClientUser();
+  const [loading, setLoading] = useState(false);
 
   async function signup(e: React.FormEvent) {
     e.preventDefault();
+    setLoading(true);
 
     await postWithAuth(username, "/api/provider/signup", {
       username,
       company: "John Doe's",
     });
 
+    setLoading(false);
     router.push("/dashboard");
   }
 
@@ -77,14 +81,17 @@ export default function Login() {
             <input
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-              value="Signup"
+              value={loading ? "Loading..." : "Signup"}
+              disabled={loading}
             />
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="#"
-            >
-              Forgot Password?
-            </a>
+            {!loading && (
+              <a
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                href="#"
+              >
+                Forgot Password?
+              </a>
+            )}
           </div>
         </form>
       </div>
