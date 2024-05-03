@@ -1,6 +1,7 @@
-import { getClientUser, postWithAuth } from "@/auth";
+import { getClientUser } from "@/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { loginFinished } from "./autologin";
 
 export default function Login() {
   const router = useRouter();
@@ -12,13 +13,9 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
 
-    await postWithAuth(username, "/api/provider/signup", {
-      username,
-      company: "John Doe's",
-    });
+    await loginFinished(router, username, null, null);
 
     setLoading(false);
-    router.push("/dashboard");
   }
 
   return (
