@@ -4,7 +4,8 @@ import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const username = getClientUser();
+  const clientUser = getClientUser();
+  const [username, setUsername] = useState(clientUser);
   const [loading, setLoading] = useState(false);
 
   async function signup(e: React.FormEvent) {
@@ -59,7 +60,10 @@ export default function Login() {
               type="text"
               placeholder="Username"
               value={username}
-              disabled
+              onChange={(e) => {
+                e.preventDefault();
+                setUsername(e.target.value);
+              }}
             />
           </div>
           <div className="mb-6">
