@@ -1,5 +1,13 @@
 import { NextApiRequest } from "next";
 
+export enum Usecase {
+  Ai = "ai",
+  Fintech = "fintech",
+  Devtools = "devtools",
+  Logistics = "logistics",
+  Gtm = "gtm",
+}
+
 // This is just terrible fake auth which automatically authenticates people
 export function getServerUser(req: NextApiRequest): string {
   const username = req.headers.authorization;
@@ -34,6 +42,51 @@ export function getClientAvatar(): string {
     avatar ??
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
   );
+}
+
+export function getExampleEventTypes(usecase: Usecase): [string, string] {
+  switch (usecase) {
+    case Usecase.Ai:
+      return ["model.query.completed", "chatbot.session.started"];
+    case Usecase.Devtools:
+      return ["deploy.strated", "issue.closed"];
+    case Usecase.Fintech:
+      return ["card.activated", "payment.completed"];
+    case Usecase.Gtm:
+      return ["email.opened", "website.visit.detected"];
+    case Usecase.Logistics:
+      return ["label.created", "driver.dispatched"];
+  }
+
+  return ["card.activated", "payment.completed"];
+}
+
+export function getUsecaseFromUsername(username: string): Usecase {
+  if (username.startsWith("ai-")) {
+    return Usecase.Ai;
+  } else if (username.startsWith("devtools-")) {
+    return Usecase.Devtools;
+  } else if (username.startsWith("logistics-")) {
+    return Usecase.Logistics;
+  } else if (username.startsWith("gtm-")) {
+    return Usecase.Gtm;
+  } else if (username.startsWith("fintech-")) {
+    return Usecase.Fintech;
+  } else {
+    return Usecase.Fintech;
+  }
+}
+
+/// The usecase parameter isn't useful in most implementations.
+/// It's only used here to support different use cases in the same app.
+/// Most implementations will just have one token.
+export function getAuthToken(usecase: Usecase): string {
+  if (process.env.SVIX_TOKEN_MAP) {
+    const map = JSON.parse(process.env.SVIX_TOKEN_MAP);
+    return map[usecase];
+  } else {
+    return process.env.SVIX_TOKEN!;
+  }
 }
 
 export async function postWithAuth(

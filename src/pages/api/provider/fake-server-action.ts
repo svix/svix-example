@@ -1,6 +1,6 @@
 import { Svix } from "svix";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerUser } from "@/auth";
+import { getAuthToken, getServerUser, getUsecaseFromUsername } from "@/auth";
 
 // The type parameter makes it easy to trigger events in this exapmle app.
 // Normally, this would just be two different API routes that actually do something.
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const username = getServerUser(req);
   const data: DataIn = req.body;
 
-  const svix = new Svix(process.env.SVIX_TOKEN!);
+  const svix = new Svix(getAuthToken(getUsecaseFromUsername(username)));
 
   // Fake do something, and send a webhook to the customer
   // The username would normally be just the user the event is related to, for the sake of the
@@ -44,6 +44,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       type: "invoice.deleted",
       id: "invoice_12324",
       reason: "User asked for refund",
+    };
+    await svix.message.create(username, { eventType: data.type, payload });
+  } else {
+    // This is to support custom types for generic examples
+    console.log("Fake doing somethig useful");
+    const payload = {
+      type: data.type,
+      id: "evt_OcVdqLY4Uyqd1tTebVBMgb",
+      description:
+        "This is an example fake event - real events should follow the event type schema.",
     };
     await svix.message.create(username, { eventType: data.type, payload });
   }

@@ -1,23 +1,21 @@
-import { getClientUser, postWithAuth } from "@/auth";
+import { getClientUser } from "@/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { loginFinished } from "./autologin";
 
 export default function Login() {
   const router = useRouter();
-  const username = getClientUser();
+  const clientUser = getClientUser();
+  const [username, setUsername] = useState(clientUser);
   const [loading, setLoading] = useState(false);
 
   async function signup(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
 
-    await postWithAuth(username, "/api/provider/signup", {
-      username,
-      company: "John Doe's",
-    });
+    await loginFinished(router, username, null, null);
 
     setLoading(false);
-    router.push("/dashboard");
   }
 
   return (
@@ -59,7 +57,10 @@ export default function Login() {
               type="text"
               placeholder="Username"
               value={username}
-              disabled
+              onChange={(e) => {
+                e.preventDefault();
+                setUsername(e.target.value);
+              }}
             />
           </div>
           <div className="mb-6">

@@ -1,4 +1,9 @@
-import { getClientUser, postWithAuth } from "@/auth";
+import {
+  getClientUser,
+  getExampleEventTypes,
+  getUsecaseFromUsername,
+  postWithAuth,
+} from "@/auth";
 import { useState } from "react";
 
 function LoadingButton(props: { loading: boolean; value: string; onClick: () => void }) {
@@ -18,19 +23,20 @@ bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outli
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const username = getClientUser();
+  const [eventType1, eventType2] = getExampleEventTypes(getUsecaseFromUsername(username));
 
-  async function invoiceCreated() {
+  async function webhook1() {
     setLoading(true);
     await postWithAuth(username, "/api/provider/fake-server-action", {
-      type: "invoice.created",
+      type: eventType1,
     });
     setLoading(false);
   }
 
-  async function invoiceDeleted() {
+  async function webhook2() {
     setLoading(true);
     await postWithAuth(username, "/api/provider/fake-server-action", {
-      type: "invoice.deleted",
+      type: eventType2,
     });
     setLoading(false);
   }
@@ -45,7 +51,7 @@ export default function Dashboard() {
         <p>
           This dashboard is an example application <q>Main Page</q>. Normally customers
           would be able to do something useful, in this example they just have buttons
-          that fake creating invoices in order to trigger webhooks.
+          that fake creating actions in order to trigger webhooks.
         </p>
         <p>
           These buttons use the{" "}
@@ -63,16 +69,8 @@ export default function Dashboard() {
         </p>
       </div>
       <div className="flex space-x-4">
-        <LoadingButton
-          loading={loading}
-          value="Create the invoice"
-          onClick={invoiceCreated}
-        />
-        <LoadingButton
-          loading={loading}
-          value="Delete the invoice"
-          onClick={invoiceDeleted}
-        />
+        <LoadingButton loading={loading} value={eventType1} onClick={webhook1} />
+        <LoadingButton loading={loading} value={eventType2} onClick={webhook2} />
       </div>
     </>
   );
