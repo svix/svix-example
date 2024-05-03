@@ -46,6 +46,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       reason: "User asked for refund",
     };
     await svix.message.create(username, { eventType: data.type, payload });
+  } else {
+    // This is to support custom types for generic examples
+    console.log("Fake doing somethig useful");
+    const payload = {
+      type: data.type,
+      id: "evt_OcVdqLY4Uyqd1tTebVBMgb",
+      description:
+        "This is an example fake event - real events should follow the event type schema.",
+    };
+    await svix.message.create(username, { eventType: data.type, payload });
   }
 
   res.json({});

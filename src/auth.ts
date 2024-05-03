@@ -44,6 +44,23 @@ export function getClientAvatar(): string {
   );
 }
 
+export function getExampleEventTypes(usecase: Usecase): [string, string] {
+  switch (usecase) {
+    case Usecase.Ai:
+      return ["model.query.completed", "chatbot.session.started"];
+    case Usecase.Devtools:
+      return ["deploy.strated", "issue.closed"];
+    case Usecase.Fintech:
+      return ["card.activated", "payment.completed"];
+    case Usecase.Gtm:
+      return ["email.opened", "website.visit.detected"];
+    case Usecase.Logistics:
+      return ["label.created", "driver.dispatched"];
+  }
+
+  return ["card.activated", "payment.completed"];
+}
+
 export function getUsecaseFromUsername(username: string): Usecase {
   if (username.startsWith("ai-")) {
     return Usecase.Ai;
