@@ -10,7 +10,7 @@ function LoadingButton(props: { loading: boolean; value: string; onClick: () => 
   return (
     <button
       className="
-bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer w-48
+bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer
       "
       disabled={props.loading}
       onClick={props.loading ? undefined : props.onClick}
@@ -69,8 +69,16 @@ export default function Dashboard() {
         </p>
       </div>
       <div className="flex space-x-4">
-        <LoadingButton loading={loading} value={eventType1} onClick={webhook1} />
-        <LoadingButton loading={loading} value={eventType2} onClick={webhook2} />
+        <LoadingButton
+          loading={loading}
+          value={`Trigger "${eventType1}"`}
+          onClick={webhook1}
+        />
+        <LoadingButton
+          loading={loading}
+          value={`Trigger "${eventType2}"`}
+          onClick={webhook2}
+        />
       </div>
     </>
   );
