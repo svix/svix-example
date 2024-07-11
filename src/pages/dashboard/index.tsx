@@ -54,6 +54,10 @@ export default function Dashboard() {
           the SIMAH application where SIMAH would want partners to set their webhooks.
         </p>
         <p>
+          While this is an example for partners, the same applies to SIMAH when SIMAH is
+          the receiver.
+        </p>
+        <p>
           These buttons are just examples for fake activity. They use the{" "}
           <a
             href="https://api.svix.com/docs#tag/Message/operation/v1.message.create"

@@ -39,6 +39,12 @@ export default function Sending() {
           Normally you would provide them with access during the onboarding process rather
           than just giving them the token in the UI. This is done as an example.
         </p>
+        <p>
+          As mentioned before. This example shows how to achieve the delivery with tokens.
+          Though the same can be done without tokens, just using magic URLs that generate
+          webhooks from inbound requests. Though those are less secure than tokens, so the
+          token method is shown below.
+        </p>
       </div>
       {token ? (
         <div>

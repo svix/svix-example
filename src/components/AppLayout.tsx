@@ -23,9 +23,9 @@ export default function AppLayout({ children }: React.PropsWithChildren) {
   const [avatar, setAvatar] = useState("");
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
-    { name: "Webhooks Portal", href: "/dashboard/webhooks" },
+    { name: "Partner Webhooks Portal", href: "/dashboard/webhooks" },
     { name: "Partner Sending", href: "/dashboard/sending" },
-    { name: "Direct Agent Access", href: "/dashboard/agent" },
+    { name: "Partner Bridge (RabbitMQ)", href: "/dashboard/agent" },
   ].map((x) => ({ ...x, current: x.href === router.pathname }));
   const paths = [...navigation, { name: "Signup", href: "/signup" }];
 
