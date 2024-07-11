@@ -16,10 +16,6 @@ export default async function handler(
   const svix = new Svix(svixToken);
   // Create a bridge configuration
   const baseUrl = (svix._configuration.baseServer as any).url;
-  console.log(
-    `${baseUrl}/api/v1/app/${username}/events/subscription/bridge1/create-token`
-  );
-  console.log(svixToken);
   const ret = await fetch(
     `${baseUrl}/api/v1/app/${username}/events/subscription/bridge1/create-token`,
     {
