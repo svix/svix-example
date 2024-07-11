@@ -1,4 +1,4 @@
-import { getClientUser, postWithAuth } from "@/auth";
+import { getClientUser, getPartnerUser, postWithAuth } from "@/auth";
 import { useState } from "react";
 
 function LoadingButton(props: { loading: boolean; value: string; onClick: () => void }) {
@@ -19,6 +19,7 @@ export default function Sending() {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
   const username = getClientUser();
+  const partner = getPartnerUser(username);
 
   async function click() {
     setLoading(true);
@@ -41,9 +42,36 @@ export default function Sending() {
       </div>
       {token ? (
         <div>
-          Token is:
-          <br />
-          <code>{token}</code>
+          <p>
+            Token is:
+            <br />
+            <code>{token}</code>
+          </p>
+          <p>
+            Examples for sending with the token:
+            <pre>
+              <code>
+                {`
+// With the Svix libs
+await svix.Message.CreateAsync("${partner}", new MessageIn{
+    eventType: "user.signup",
+    payload: /* ... */
+})
+
+// With cURL
+curl -X 'POST' \\
+  'https://api.svix.com/api/v1/app/${partner}/msg' \\
+  -H 'Authorization: Bearer ${token}' \\
+  -H 'Accept: application/json' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+        "eventType": "user.signup",
+        "payload": {"some": "payload"}
+    }'
+    `}
+              </code>
+            </pre>
+          </p>
         </div>
       ) : (
         <LoadingButton
