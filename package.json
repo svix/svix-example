@@ -19,7 +19,7 @@
     "next": "13.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "svix": "^0.78.0",
+    "svix": "^1.24.1-next-555b588d746da33cf75aa3dcb3afd7ea7f996ebe.0",
     "svix-react": "^1.10.2"
   },
   "devDependencies": {

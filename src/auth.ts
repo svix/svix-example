@@ -17,6 +17,10 @@ export function getServerUser(req: NextApiRequest): string {
   return username;
 }
 
+export function getPartnerUser(username: string): string {
+  return username + "_in";
+}
+
 export function getClientUser(): string {
   let user = undefined;
   if (typeof window !== "undefined") {

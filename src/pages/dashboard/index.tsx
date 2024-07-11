@@ -43,18 +43,18 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Send Example Webhooks</h1>
+      <h1 className="text-3xl font-bold underline">This is an example app</h1>
       <div
         className="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 max-w-xl mb-4"
         role="alert"
       >
         <p>
-          This dashboard is an example application <q>Main Page</q>. Normally customers
-          would be able to do something useful, in this example they just have buttons
-          that fake creating actions in order to trigger webhooks.
+          This dashboard is an example application <q>Main Page</q>. This whole "app"
+          won't actually be used. Instead the Webhooks Portal tab will just be embedded in
+          the SIMAH application where SIMAH would want partners to set their webhooks.
         </p>
         <p>
-          These buttons use the{" "}
+          These buttons are just examples for fake activity. They use the{" "}
           <a
             href="https://api.svix.com/docs#tag/Message/operation/v1.message.create"
             className="font-bold"
@@ -65,7 +65,7 @@ export default function Dashboard() {
           <a href="https://docs.svix.com/quickstart" className="font-bold">
             consumer application
           </a>{" "}
-          when created on signup.
+          when created for the partner.
         </p>
       </div>
       <div className="flex space-x-4">
