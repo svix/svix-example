@@ -2,6 +2,8 @@ import { getClientUser } from "@/auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { loginFinished } from "./autologin";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Login() {
   const router = useRouter();
@@ -51,10 +53,8 @@ export default function Login() {
             >
               Username
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            <Input
               id="username"
-              type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => {
@@ -70,21 +70,12 @@ export default function Login() {
             >
               Password
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              value="*************"
-              disabled
-            />
+            <Input id="password" type="password" value="*************" disabled />
           </div>
           <div className="flex items-center justify-between">
-            <input
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-              value={loading ? "Loading..." : "Signup"}
-              disabled={loading}
-            />
+            <Button type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Signup"}
+            </Button>
             {!loading && (
               <a
                 className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
