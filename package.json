@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.10",
-    "@heroicons/react": "^2.0.15",
     "@next/font": "13.1.6",
     "clsx": "^1.2.1",
+    "lucide-react": "^0.513.0",
     "micro": "^10.0.1",
     "next": "13.5.7",
     "react": "18.2.0",

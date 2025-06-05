@@ -5,18 +5,13 @@ import {
   postWithAuth,
 } from "@/auth";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 function LoadingButton(props: { loading: boolean; value: string; onClick: () => void }) {
   return (
-    <button
-      className="
-bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer
-      "
-      disabled={props.loading}
-      onClick={props.loading ? undefined : props.onClick}
-    >
+    <Button disabled={props.loading} onClick={props.loading ? undefined : props.onClick}>
       {props.loading ? "Loading..." : props.value}
-    </button>
+    </Button>
   );
 }
 
