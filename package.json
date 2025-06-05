@@ -11,8 +11,8 @@
     "lint:fix": "prettier src --write && yarn run lint:eslint --fix"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.10",
     "@next/font": "13.1.6",
+    "@radix-ui/react-tabs": "^1.1.12",
     "clsx": "^1.2.1",
     "lucide-react": "^0.513.0",
     "micro": "^10.0.1",
