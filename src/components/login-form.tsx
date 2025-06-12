@@ -49,7 +49,7 @@ export function LoginForm({
                     id="username"
                     type="text"
                     placeholder="john.doe"
-                    value={username}
+                    defaultValue={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
@@ -69,7 +69,7 @@ export function LoginForm({
                     type="password"
                     required
                     placeholder="*************"
-                    value="*************"
+                    defaultValue="*************"
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
