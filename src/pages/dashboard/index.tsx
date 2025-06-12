@@ -1,85 +1,53 @@
-import {
-  getClientUser,
-  getExampleEventTypes,
-  getUsecaseFromUsername,
-  postWithAuth,
-} from "@/auth";
-import { useState } from "react";
+import { ChartAreaInteractive } from "@/components/dashboard/chart-area-interactive";
+import { DataTable } from "@/components/dashboard/data-table";
+import { SectionCards } from "@/components/dashboard/section-cards";
+import { SiteHeader } from "@/components/site-header";
+import { InfoIcon } from "lucide-react";
 
-function LoadingButton(props: { loading: boolean; value: string; onClick: () => void }) {
-  return (
-    <button
-      className="
-bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer
-      "
-      disabled={props.loading}
-      onClick={props.loading ? undefined : props.onClick}
-    >
-      {props.loading ? "Loading..." : props.value}
-    </button>
-  );
-}
+import DashboardLayout from "@/components/layout/dashboard-layout";
+import { NextPageWithLayout } from "@/pages/_app";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
 
-export default function Dashboard() {
-  const [loading, setLoading] = useState(false);
-  const username = getClientUser();
-  const [eventType1, eventType2] = getExampleEventTypes(getUsecaseFromUsername(username));
-
-  async function webhook1() {
-    setLoading(true);
-    await postWithAuth(username, "/api/provider/fake-server-action", {
-      type: eventType1,
-    });
-    setLoading(false);
-  }
-
-  async function webhook2() {
-    setLoading(true);
-    await postWithAuth(username, "/api/provider/fake-server-action", {
-      type: eventType2,
-    });
-    setLoading(false);
-  }
-
+const Page: NextPageWithLayout = () => {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Send Example Webhooks</h1>
-      <div
-        className="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-4 max-w-xl mb-4"
-        role="alert"
-      >
-        <p>
-          This dashboard is an example application <q>Main Page</q>. Normally customers
-          would be able to do something useful, in this example they just have buttons
-          that fake creating actions in order to trigger webhooks.
-        </p>
-        <p>
-          These buttons use the{" "}
-          <a
-            href="https://api.svix.com/docs#tag/Message/operation/v1.message.create"
-            className="font-bold"
-          >
-            message sending API
-          </a>{" "}
-          behind the scenes to send webhooks to the{" "}
-          <a href="https://docs.svix.com/quickstart" className="font-bold">
-            consumer application
-          </a>{" "}
-          when created on signup.
-        </p>
-      </div>
-      <div className="flex space-x-4">
-        <LoadingButton
-          loading={loading}
-          value={`Trigger "${eventType1}"`}
-          onClick={webhook1}
-        />
-        <LoadingButton
-          loading={loading}
-          value={`Trigger "${eventType2}"`}
-          onClick={webhook2}
-        />
+      <SiteHeader title="Dashboard" />
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <div className="px-6">
+              <Alert variant="info">
+                <AlertTitle className="flex items-center">
+                  <InfoIcon className="mr-2 h-4 w-4" /> About this dashboard
+                </AlertTitle>
+                <AlertDescription>
+                  This dashboard is an example application. Normally, customers would use
+                  it to manage all aspects of your application, including <b>webhooks</b>.
+                  <br />
+                  Click on the{" "}
+                  <Link href="/dashboard/webhooks" className="underline">
+                    Webhooks
+                  </Link>{" "}
+                  tab to see how the Svix consumer application portal can look like in
+                  your application.
+                </AlertDescription>
+              </Alert>
+            </div>
+            <SectionCards />
+            <div className="px-4 lg:px-6">
+              <ChartAreaInteractive />
+            </div>
+            <DataTable />
+          </div>
+        </div>
       </div>
     </>
   );
-}
+};
+
+Page.getLayout = (page: React.ReactNode) => {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
+
+export default Page;

@@ -1,31 +1,44 @@
 import { getClientUser, postWithAuth } from "@/auth";
-import dynamic from "next/dynamic";
+import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useEffect, useState } from "react";
-
-const AppPortal = dynamic(
-  {
-    loader: () => import("svix-react").then((mod) => mod.AppPortal),
-  },
-  {
-    ssr: false,
-  }
-);
+import { NextPageWithLayout } from "@/pages/_app";
 
 import "svix-react/style.css";
+import { SiteHeader } from "@/components/site-header";
+import { AppPortal } from "svix-react";
 
-export default function WebhooksDashboard() {
+function getURLWithCustomizations(url: string) {
+  const urlObj = new URL(url);
+  urlObj.searchParams.set("noGutters", "true");
+  return urlObj.toString();
+}
+
+const Page: NextPageWithLayout = () => {
   const [appPortal, setAppPortal] = useState<string>();
   const username = getClientUser();
 
   async function getAppPortalUrl() {
     const res = await postWithAuth(username, "/api/provider/app-portal", {});
-
-    setAppPortal(res.url);
+    const url = getURLWithCustomizations(res.url);
+    setAppPortal(url);
   }
 
   useEffect(() => {
     getAppPortalUrl();
   }, []);
 
-  return <AppPortal fullSize url={appPortal} />;
-}
+  return (
+    <div className="flex flex-1 flex-col">
+      <SiteHeader title="Webhooks" />
+      <div className="p-6">
+        <AppPortal fullSize url={appPortal} />
+      </div>
+    </div>
+  );
+};
+
+Page.getLayout = (page: React.ReactNode) => {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
+
+export default Page;

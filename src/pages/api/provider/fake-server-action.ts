@@ -1,6 +1,5 @@
-import { Svix } from "svix";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAuthToken, getServerUser, getUsecaseFromUsername } from "@/auth";
+import { getServerUser, getSvix } from "@/auth";
 
 // The type parameter makes it easy to trigger events in this exapmle app.
 // Normally, this would just be two different API routes that actually do something.
@@ -25,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const username = getServerUser(req);
   const data: DataIn = req.body;
 
-  const svix = new Svix(getAuthToken(getUsecaseFromUsername(username)));
+  const svix = getSvix(username);
 
   // Fake do something, and send a webhook to the customer
   // The username would normally be just the user the event is related to, for the sake of the
