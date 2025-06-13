@@ -73,7 +73,7 @@ export function LoginForm({
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Signing up..." : "Signup"}
+                  {loading ? "Signing up..." : "Sign up"}
                 </Button>
               </div>
             </div>
