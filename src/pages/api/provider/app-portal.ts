@@ -1,6 +1,5 @@
-import { Svix } from "svix";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAuthToken, getServerUser, getUsecaseFromUsername } from "@/auth";
+import { getServerUser, getSvix } from "@/auth";
 
 interface DataOut {
   url: string;
@@ -13,7 +12,7 @@ export default async function handler(
 ) {
   const username = getServerUser(req);
 
-  const svix = new Svix(getAuthToken(getUsecaseFromUsername(username)));
+  const svix = getSvix(username);
   // The username would normally be fetched from auth, and not body!
   const { url, token } = await svix.authentication.appPortalAccess(username, {});
 

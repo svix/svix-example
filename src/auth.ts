@@ -1,4 +1,5 @@
 import { NextApiRequest } from "next";
+import { Svix } from "svix";
 
 export enum Usecase {
   Ai = "ai",
@@ -38,10 +39,7 @@ export function getClientAvatar(): string {
   if (typeof window !== "undefined") {
     avatar = localStorage.getItem("avatar");
   }
-  return (
-    avatar ??
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-  );
+  return avatar ?? "/avatar.png";
 }
 
 export function getExampleEventTypes(usecase: Usecase): [string, string] {
@@ -104,4 +102,10 @@ export async function postWithAuth(
   });
 
   return await ret.json();
+}
+
+export function getSvix(username: string): Svix {
+  return new Svix(getAuthToken(getUsecaseFromUsername(username)), {
+    serverUrl: process.env.SVIX_SERVER_URL, // For local development.
+  });
 }

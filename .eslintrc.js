@@ -73,6 +73,7 @@ module.exports = {
     "react/void-dom-elements-no-children": ["error"],
     "react/no-unknown-property": ["error"],
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
 
     quotes: "off",
     "@typescript-eslint/quotes": [
