@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Info } from "lucide-react";
 import WebhookDialog from "@/components/webhook-dialog";
+import Head from "next/head";
 
 const EmptyState = () => {
   return (
@@ -162,7 +163,16 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = (page: React.ReactNode) => {
-  return <DashboardLayout>{page}</DashboardLayout>;
+  return (
+    <>
+      <DashboardLayout>
+        <Head>
+          <title>Custom Webhooks Portal | example.svix.com</title>
+        </Head>
+        {page}
+      </DashboardLayout>
+    </>
+  );
 };
 
 export default Page;
