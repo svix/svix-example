@@ -6,6 +6,7 @@ import { NextPageWithLayout } from "@/pages/_app";
 import "svix-react/style.css";
 import { SiteHeader } from "@/components/site-header";
 import { AppPortal } from "svix-react";
+import Head from "next/head";
 
 function getURLWithCustomizations(url: string) {
   const urlObj = new URL(url);
@@ -28,12 +29,17 @@ const Page: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <div className="flex flex-1 flex-col">
-      <SiteHeader title="Webhooks" />
-      <div className="p-6">
-        <AppPortal fullSize url={appPortal} />
+    <>
+      <Head>
+        <title>Webhooks | example.svix.com</title>
+      </Head>
+      <div className="flex flex-1 flex-col">
+        <SiteHeader title="Webhooks" />
+        <div className="p-6">
+          <AppPortal fullSize url={appPortal} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

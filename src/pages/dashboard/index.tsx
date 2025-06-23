@@ -8,6 +8,7 @@ import DashboardLayout from "@/components/layout/dashboard-layout";
 import { NextPageWithLayout } from "@/pages/_app";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
+import Head from "next/head";
 
 const Page: NextPageWithLayout = () => {
   return (
@@ -47,7 +48,16 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = (page: React.ReactNode) => {
-  return <DashboardLayout>{page}</DashboardLayout>;
+  return (
+    <>
+      <DashboardLayout>
+        <Head>
+          <title>Dashboard | example.svix.com</title>
+        </Head>
+        {page}
+      </DashboardLayout>
+    </>
+  );
 };
 
 export default Page;
