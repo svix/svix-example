@@ -52,7 +52,7 @@ Page.getLayout = (page: React.ReactNode) => {
     <>
       <DashboardLayout>
         <Head>
-          <title>Dashboard | example.svix.com</title>
+          <title>Dashboard | Acme Inc.</title>
         </Head>
         {page}
       </DashboardLayout>

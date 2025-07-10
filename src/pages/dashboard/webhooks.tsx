@@ -31,7 +31,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Webhooks | example.svix.com</title>
+        <title>Webhooks | Acme Inc.</title>
       </Head>
       <div className="flex flex-1 flex-col">
         <SiteHeader title="Webhooks" />

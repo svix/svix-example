@@ -167,7 +167,7 @@ Page.getLayout = (page: React.ReactNode) => {
     <>
       <DashboardLayout>
         <Head>
-          <title>Custom Webhooks Portal | example.svix.com</title>
+          <title>Custom Webhooks Portal | Acme Inc.</title>
         </Head>
         {page}
       </DashboardLayout>
