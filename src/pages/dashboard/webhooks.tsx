@@ -2,6 +2,7 @@ import { getClientUser, postWithAuth } from "@/auth";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useEffect, useState } from "react";
 import { NextPageWithLayout } from "@/pages/_app";
+import { useRouter } from "next/router";
 
 import "svix-react/style.css";
 import { SiteHeader } from "@/components/site-header";
@@ -17,6 +18,7 @@ function getURLWithCustomizations(url: string) {
 const Page: NextPageWithLayout = () => {
   const [appPortal, setAppPortal] = useState<string>();
   const username = getClientUser();
+  const { query, isReady } = useRouter();
 
   async function getAppPortalUrl() {
     const res = await postWithAuth(username, "/api/provider/app-portal", {});
@@ -25,8 +27,14 @@ const Page: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    getAppPortalUrl();
-  }, []);
+    const portalUrl = query.portalUrl as string;
+    if (portalUrl) {
+      const url = getURLWithCustomizations(portalUrl);
+      setAppPortal(url);
+    } else if (isReady) {
+      getAppPortalUrl();
+    }
+  }, [query.portalUrl, isReady]);
 
   return (
     <>
