@@ -35,7 +35,7 @@ export async function loginFinished(
   username = username ?? getClientUser();
   await postWithAuth(username, "/api/provider/signup", {
     username,
-    company: "Acme Inc.",
+    company: "Anvil Technologies",
   });
 
   router.push("/dashboard");

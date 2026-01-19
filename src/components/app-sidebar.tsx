@@ -46,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="/dashboard">
                 <Anvil />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">Anvil Technologies</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
