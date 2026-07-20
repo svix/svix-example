@@ -56,14 +56,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} currentPath={currentPath} />
       </SidebarContent>
       <SidebarFooter>
-        <WebhookDialog
+        {/* <WebhookDialog
           trigger={
             <SidebarMenuButton className="active:bg-yellow-600 border-1 border-yellow-200 bg-yellow-50 active:text-white hover:bg-yellow-50 hover:text-yellow-600">
               <Zap className="!size-5 text-yellow-500" />
               <span>Send Webhook</span>
             </SidebarMenuButton>
           }
-        />
+        /> */}
         <NavUser />
       </SidebarFooter>
     </Sidebar>

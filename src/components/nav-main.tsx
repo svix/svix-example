@@ -45,12 +45,12 @@ export function NavMain({
             icon={<Webhook />}
             title="Webhooks"
           />
-          <HighlightedSidebarMenuButton
+          {/* <HighlightedSidebarMenuButton
             href="/dashboard/advanced/svix-react-example"
             currentPath={currentPath}
             icon={<Code />}
             title="Webhooks (custom)"
-          />
+          /> */}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
@@ -73,9 +73,9 @@ function HighlightedSidebarMenuButton({
       <SidebarMenuButton
         tooltip={title}
         className={cn(
-          "active:bg-blue-600 border-1 border-blue-200 bg-blue-50 active:text-white hover:bg-blue-50 hover:text-blue-600",
+          "border border-[#333380]/50 bg-[#333380]/30 text-indigo-100 hover:bg-[#333380]/50 hover:text-white active:bg-[#333380] active:text-white",
           currentPath === href &&
-            "bg-blue-600 text-white hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white"
+            "bg-[#333380] text-white hover:bg-[#333380] hover:text-white active:bg-[#333380] active:text-white"
         )}
         asChild
       >
